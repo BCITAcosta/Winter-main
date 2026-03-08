@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.SwerveDriveCommand;
+import frc.robot.subsystems.Autonomous;
 import frc.robot.subsystems.Drivetrain;
 // import frc.robot.subsystems.Hopper;
 // import frc.robot.subsystems.Intake;
@@ -15,6 +16,7 @@ import frc.robot.util.DriverOI;
 
 public class RobotContainer {
   private Drivetrain subSys_drivetrain; 
+  private Autonomous subSys_Autonomous;
   // private Hopper subSys_hopper;
   // private Intake subSys_intake;
   
@@ -25,6 +27,8 @@ public class RobotContainer {
   public RobotContainer() {
     subSys_drivetrain = Drivetrain.getInstance();
     subSys_drivetrain.setDefaultCommand(new SwerveDriveCommand());
+
+    subSys_Autonomous = Autonomous.getInstance();
     // subSys_hopper =  Hopper.getInstance();
     // subSys_intake = Intake.getInstance(); 
 
@@ -53,6 +57,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return subSys_Autonomous.returnAutonomousCommand();
   }
 }

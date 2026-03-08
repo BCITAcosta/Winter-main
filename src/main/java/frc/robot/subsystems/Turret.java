@@ -5,6 +5,7 @@ import java.util.function.BooleanSupplier;
 
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
@@ -25,6 +26,8 @@ public class Turret extends SubsystemBase{
     private TurretModuleConstants turretConstants;
 
     private static Timer timeManager;
+
+    private final SparkClosedLoopController m_shooterController;
 
     private final SparkMax turretSpark;
     private final SparkMaxConfig turretSparkConfig;
@@ -59,9 +62,10 @@ public class Turret extends SubsystemBase{
     shooterMotorLeft = new SparkFlex(this.turretConstants.shooterMotorLeftID, MotorType.kBrushless);
     shooterMotorLeftConfig = new SparkFlexConfig();
   
-
     shooterMotorRight = new SparkFlex(this.turretConstants.shooterMotorRightID, MotorType.kBrushless);
     shooterMotorRightConfig = new SparkFlexConfig();
+
+    m_shooterController = shooterMotorLeft.getClosedLoopController();
 
     configureShooterMotors();
 

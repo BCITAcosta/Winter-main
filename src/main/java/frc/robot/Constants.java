@@ -196,9 +196,14 @@ public final class Constants {
       public static final int shooterMotorRightID = 54;
       public static final double idleRPM = 1000;
       public static final double maxRPM = 4000;
+      public static final double maxAcceleration = 24000;
       public static final boolean turnMotorInverted = false;
       public static final boolean shooterMotorLeftInverted = false;
-      public static final TurretModuleConstants constants = new TurretModuleConstants(turnMotorID, shooterMotorLeftID, shooterMotorRightID, idleRPM, maxRPM, turnMotorInverted, shooterMotorLeftInverted);
+      public static final double[] pidValues = {0.0006, 0.000000175, 0.0005};
+      public static final TurretModuleConstants constants = new TurretModuleConstants(
+        turnMotorID, shooterMotorLeftID, shooterMotorRightID, 
+        idleRPM, maxRPM, maxAcceleration, 
+        turnMotorInverted, shooterMotorLeftInverted, pidValues);
 
     }
   
@@ -241,6 +246,7 @@ public final class Constants {
       
     }
   }
+
   public static class AprilTag{
     public static final AprilTagFieldLayout  kfieldLayout = 
       AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);

@@ -81,9 +81,9 @@ public class Mk4TTBSwerve{
         m_turningSparkMaxConfig.inverted(true);
         m_turningSparkMaxConfig.smartCurrentLimit(40);
         m_turningSparkMaxConfig.absoluteEncoder.setSparkMaxDataPortConfig();
-        m_turningSparkMaxConfig.absoluteEncoder.inverted(false);
-        m_turningSparkMaxConfig.absoluteEncoder.positionConversionFactor(1.0);
-        m_turningSparkMaxConfig.absoluteEncoder.velocityConversionFactor(1.0);
+        m_turningSparkMaxConfig.absoluteEncoder.inverted(m_constants.turnInverted);
+        m_turningSparkMaxConfig.absoluteEncoder.positionConversionFactor(2*Math.PI);
+        m_turningSparkMaxConfig.absoluteEncoder.velocityConversionFactor(2*Math.PI/60);
         //m_turningSparkMaxConfig.analogSensor.inverted(m_constants.turnInverted);
         //m_turningSparkMaxConfig.analogSensor.positionConversionFactor((2*Math.PI)/3.3);
         //m_turningSparkMaxConfig.analogSensor.velocityConversionFactor(((2*Math.PI)/3.3)/60);
@@ -94,7 +94,7 @@ public class Mk4TTBSwerve{
         .positionWrappingEnabled(true)
         .positionWrappingInputRange(0, 2*Math.PI);
         m_turningSparkMaxConfig.closedLoopRampRate(0.05);
-        m_turningSparkMax.configure(m_turningSparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_turningSparkMax.configure(m_turningSparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     /**
@@ -103,7 +103,7 @@ public class Mk4TTBSwerve{
     private void configDriveSpark(){
         m_driveSparkMaxConfig.idleMode(driveIdleMode);
         m_driveSparkMaxConfig.inverted(m_constants.driveInverted);
-        m_driveSparkMaxConfig.smartCurrentLimit(60);
+        m_driveSparkMaxConfig.smartCurrentLimit(66);
         m_driveSparkMaxConfig.encoder.positionConversionFactor(SwerveDriveConstants.kDrivingEncoderPositionFactor);
         m_driveSparkMaxConfig.encoder.velocityConversionFactor(SwerveDriveConstants.kDrivingEncoderVelocityFactor);
         m_driveSparkMaxConfig.closedLoop

@@ -24,14 +24,14 @@ public class Turret extends SubsystemBase{
     private int turretID;
     private TurretModuleConstants turretConstants;
 
-    private Timer timeManager;
+    private static Timer timeManager;
 
     private final SparkMax turretSpark;
     private final SparkMaxConfig turretSparkConfig;
 
-    //private final SparkFlex shooterMotorLeft,
+    private final SparkFlex shooterMotorLeft;
     private final SparkFlex shooterMotorRight;
-    //private final SparkFlexConfig shooterMotorLeftConfig;
+    private final SparkFlexConfig shooterMotorLeftConfig;
     private final SparkFlexConfig shooterMotorRightConfig;
 
     /**
@@ -49,23 +49,39 @@ public class Turret extends SubsystemBase{
     turretSparkConfig.smartCurrentLimit(40);
     turretSparkConfig.encoder.positionConversionFactor(Constants.Turret.encoderConverionFactor);
     turretSparkConfig.closedLoop.pid(6,0,0.4);
+    turretSparkConfig.closedLoop.outputRange(-1, 1);
+    turretSparkConfig.closedLoop.positionWrappingEnabled(true);
+    turretSparkConfig.closedLoop.positionWrappingInputRange(0, 2*Math.PI);
     turretSparkConfig.idleMode(IdleMode.kBrake);
     turretSpark.configure(turretSparkConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     turretSpark.getEncoder().setPosition(Constants.Turret.turretHome);
     
-    // shooterMotorLeft = new SparkFlex(this.turretConstants.shooterMotorLeftID, MotorType.kBrushless);
-    // shooterMotorLeftConfig = new SparkFlexConfig();
-    // shooterMotorLeftConfig.smartCurrentLimit(80);
-    // shooterMotorLeftConfig.inverted(this.turretConstants.shooterMotorLeftInverted);
-    // shooterMotorLeft.configure(shooterMotorLeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    shooterMotorLeft = new SparkFlex(this.turretConstants.shooterMotorLeftID, MotorType.kBrushless);
+    shooterMotorLeftConfig = new SparkFlexConfig();
+  
 
     shooterMotorRight = new SparkFlex(this.turretConstants.shooterMotorRightID, MotorType.kBrushless);
     shooterMotorRightConfig = new SparkFlexConfig();
-    shooterMotorRightConfig.smartCurrentLimit(80);
-    shooterMotorRightConfig.inverted(this.turretConstants.shooterMotorRightInverted);
-    shooterMotorRight.configure(shooterMotorRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    configureShooterMotors();
+
+    }
+
+    private void configureShooterMotors(){
+        shooterMotorLeftConfig.smartCurrentLimit(80);
+        shooterMotorLeftConfig.idleMode(IdleMode.kCoast);
+        shooterMotorLeftConfig.inverted(this.turretConstants.shooterMotorLeftInverted);
+        shooterMotorLeftConfig.closedLoop.pid(this.turretConstants.kP, this.turretConstants.kI, this.turretConstants.kD);
+        shooterMotorLeftConfig.closedLoop.feedForward.kS(0.01);
+        shooterMotorLeftConfig.closedLoop.maxMotion.maxAcceleration(this.turretConstants.maxAcceleration).allowedProfileError(1);
+        shooterMotorLeft.configure(shooterMotorLeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
 
+        shooterMotorRightConfig.smartCurrentLimit(80);
+        shooterMotorRightConfig.idleMode(IdleMode.kCoast);
+        shooterMotorRightConfig.inverted(this.turretConstants.shooterMotorRightInverted);
+        shooterMotorRightConfig.follow(this.turretConstants.shooterMotorLeftID);
+        shooterMotorRight.configure(shooterMotorRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public int getTurretID(){

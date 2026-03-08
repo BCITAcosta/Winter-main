@@ -126,29 +126,29 @@ public class Drivetrain extends SubsystemBase{
         correctHeadingOffTime = 0.0;
         correctHeadingTargetHeading = getHeadingAsRotation2d();
 
-        // AutoBuilder.configure(
-        //     this::getPose,
-        //     this::resetPose,
-        //     this::getRobotChassisSpeeds,
-        //     (speeds, feedfowards) -> autoDrive(speeds),
-        //     new PPHolonomicDriveController(
-        //         new PIDConstants(0.1,0,0),
-        //         new PIDConstants(0.4,0,0)
-        //     ),
-        //     robotConfig,
-        //     ()-> {
-        //       // Boolean supplier that controls when the path will be mirrored for the red alliance
-        //       // This will flip the path being followed to the red side of the field.
-        //       // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+        AutoBuilder.configure(
+            this::getPose,
+            this::resetPose,
+            this::getRobotChassisSpeeds,
+            (speeds, feedfowards) -> autoDrive(speeds),
+            new PPHolonomicDriveController(
+                new PIDConstants(0.01,0,0),
+                new PIDConstants(0.04,0,0)
+            ),
+            robotConfig,
+            ()-> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-        //       var alliance = DriverStation.getAlliance();
-        //       if (alliance.isPresent()) {
-        //         return alliance.get() == DriverStation.Alliance.Red;
-        //       }
-        //       return false;
-        //     },
-        //     this // Reference to this subsystem to set requirements
-        // );
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this // Reference to this subsystem to set requirements
+        );
     }
 
     public static Drivetrain getInstance(){

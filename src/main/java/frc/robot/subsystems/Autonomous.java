@@ -19,6 +19,7 @@ public class Autonomous extends SubsystemBase{
     private Hashtable<String, Command> autoRoutines;
 
     // private PathPlannerAuto driveOut, reverseDriveOut, centerDriveOut, yeetAgain;
+    private PathPlannerAuto driveOutLeft, driveOutRight;
 
 
     public Autonomous(){
@@ -59,6 +60,8 @@ public class Autonomous extends SubsystemBase{
     }
 
     public void defineAutoPaths(){
+        driveOutLeft = new PathPlannerAuto("DriveOutLeft");
+        driveOutRight = new PathPlannerAuto("DriveOutRight");
         // driveOut = new PathPlannerAuto("DriveOut");
         // reverseDriveOut = new PathPlannerAuto("DriveOutReverse");
         // centerDriveOut = new PathPlannerAuto("CenterDriveOut");

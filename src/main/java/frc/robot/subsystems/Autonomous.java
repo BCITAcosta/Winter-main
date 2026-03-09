@@ -38,10 +38,8 @@ public class Autonomous extends SubsystemBase{
     }
 
     public void setupAutoRoutines(){
-        // autoRoutines.put("Drive Out", driveOut);
-        // autoRoutines.put("Reverse Drive Out", reverseDriveOut);
-        // autoRoutines.put("Center Drive Out", centerDriveOut);
-        // autoRoutines.put("Yeet", yeetAgain);
+        autoRoutines.put("Drive Out Left", driveOutLeft);
+        autoRoutines.put("Drive Out Right", driveOutRight);
     }
 
     public void setupAutoSelector(){
@@ -62,11 +60,6 @@ public class Autonomous extends SubsystemBase{
     public void defineAutoPaths(){
         driveOutLeft = new PathPlannerAuto("DriveOutLeft");
         driveOutRight = new PathPlannerAuto("DriveOutRight");
-        // driveOut = new PathPlannerAuto("DriveOut");
-        // reverseDriveOut = new PathPlannerAuto("DriveOutReverse");
-        // centerDriveOut = new PathPlannerAuto("CenterDriveOut");
-        // yeetAgain = new PathPlannerAuto("Yeet2");
-
     }
 
 }

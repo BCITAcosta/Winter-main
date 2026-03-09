@@ -25,7 +25,7 @@ import edu.wpi.first.apriltag.AprilTagFields;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static boolean debugMode = false;
+  public static boolean debugMode = true;
   public static boolean calibrationMode = false;
   public static boolean safeMode = true;
 
@@ -64,12 +64,12 @@ public final class Constants {
   }
 
   public static class SwerveDriveConstants{
-    public static final double kWheelBase = Units.inchesToMeters(24.229226);
-    public static final double kTrackWidth = Units.inchesToMeters(24.229226);
+    public static final double kWheelBase = Units.inchesToMeters(20.229226);
+    public static final double kTrackWidth = Units.inchesToMeters(20.229226);
 
     public static final double kBaseRadius = Math.sqrt(Math.pow(kTrackWidth, 2) + Math.pow(kWheelBase, 2))/2;
 
-    public static final double kRealMaxSpeedMPS = 5.24256;
+    public static final double kRealMaxSpeedMPS = 4.35864;
     public static final double kMaxAngularSpeed = 4 * Math.PI /3;
     public static final double MAXROTATIONRATE = 1.0;
     public static final double kNormalModeTranslationSpeedScale = 0.85;
@@ -83,7 +83,7 @@ public final class Constants {
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 Tooth Bevel Gear, 17 Tooth Bevel Gear Driving, 19 Tooth Second Stage Out, 
     // 27 Tooth Second Stage In, 16 Tooth Pinion, 50 Tooth First Stage
-    public static final double kDrivingMotorReduction = 1/7.13;
+    public static final double kDrivingMotorReduction = 1/7.12;
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps
                     * kWheelCircumferenceMeters) / kDrivingMotorReduction;
 
@@ -119,9 +119,9 @@ public final class Constants {
   public static class Swerve{
     // Module A (FL)
     public static final class Mod0{
-        public static final int kTurnSparkMaxID = 11;
-        public static final int kDriveSparkMaxID = 12;
-        public static final Rotation2d angleOffset = new Rotation2d(0.15);
+        public static final int kTurnSparkMaxID = 42;
+        public static final int kDriveSparkMaxID = 41;
+        public static final Rotation2d angleOffset = new Rotation2d(0.00);
         public static final boolean driveInverted = true;
         public static final boolean turnInverted = false;
 
@@ -131,9 +131,9 @@ public final class Constants {
 
     // Module B (FR)
     public static final class Mod1{
-      public static final int kTurnSparkMaxID = 21;
-      public static final int kDriveSparkMaxID = 22;
-      public static final Rotation2d angleOffset = new Rotation2d(0.06);
+      public static final int kTurnSparkMaxID = 32;
+      public static final int kDriveSparkMaxID = 31;
+      public static final Rotation2d angleOffset = new Rotation2d(0.00);
       public static final boolean driveInverted = true;
       public static final boolean turnInverted = false;
 
@@ -143,9 +143,9 @@ public final class Constants {
 
     // Module C (BL)
     public static final class Mod2{
-      public static final int kTurnSparkMaxID = 31;
-      public static final int kDriveSparkMaxID = 32;
-      public static final Rotation2d angleOffset = new Rotation2d(0.29);
+      public static final int kTurnSparkMaxID = 22;
+      public static final int kDriveSparkMaxID = 21;
+      public static final Rotation2d angleOffset = new Rotation2d(0.00);
       public static final boolean driveInverted = true;
       public static final boolean turnInverted = false;
 
@@ -155,9 +155,9 @@ public final class Constants {
 
     // Module D (BR)
     public static final class Mod3{
-      public static final int kTurnSparkMaxID = 41;
-      public static final int kDriveSparkMaxID = 42;
-      public static final Rotation2d angleOffset = new Rotation2d(5.45);
+      public static final int kTurnSparkMaxID = 12;
+      public static final int kDriveSparkMaxID = 11;
+      public static final Rotation2d angleOffset = new Rotation2d(0.0);
       public static final boolean driveInverted = true;
       public static final boolean turnInverted = false;
 

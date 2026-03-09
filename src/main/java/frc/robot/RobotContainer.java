@@ -16,7 +16,7 @@ import frc.robot.util.DriverOI;
 
 public class RobotContainer {
   private Drivetrain subSys_drivetrain; 
-  private Autonomous subSys_Autonomous;
+ // private Autonomous subSys_Autonomous;
   // private Hopper subSys_hopper;
   // private Intake subSys_intake;
   
@@ -28,7 +28,7 @@ public class RobotContainer {
     subSys_drivetrain = Drivetrain.getInstance();
     subSys_drivetrain.setDefaultCommand(new SwerveDriveCommand());
 
-    subSys_Autonomous = Autonomous.getInstance();
+    // subSys_Autonomous = Autonomous.getInstance();
     // subSys_hopper =  Hopper.getInstance();
     // subSys_intake = Intake.getInstance(); 
 
@@ -57,6 +57,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return subSys_Autonomous.returnAutonomousCommand();
+    return null; //subSys_Autonomous.returnAutonomousCommand();
   }
 }

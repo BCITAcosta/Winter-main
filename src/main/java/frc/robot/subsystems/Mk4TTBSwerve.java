@@ -4,9 +4,11 @@ import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.FeedbackSensor;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkAnalogSensor;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -25,7 +27,7 @@ public class Mk4TTBSwerve{
     // Turning Spark Information and Calls
     private final SparkMax m_turningSparkMax;
     private final SparkMaxConfig m_turningSparkMaxConfig;
-    private final SparkAnalogSensor m_turningEncoder;
+    private final SparkAbsoluteEncoder m_turningEncoder;
     private final SparkClosedLoopController m_turningController;
 
     // Driving Spark Information and Calls
@@ -39,7 +41,7 @@ public class Mk4TTBSwerve{
     private SwerveModuleConstants m_constants;
 
     private SwerveModuleState state;
-    private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
+    private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d(0));
     private double m_angleOffset = 0.0;
 
     private IdleMode driveIdleMode;
@@ -60,7 +62,7 @@ public class Mk4TTBSwerve{
 
         m_turningSparkMax = new SparkMax(constants.turnMotorID, MotorType.kBrushless);
         m_angleOffset = constants.angleOffset.getRadians();
-        m_turningEncoder = m_turningSparkMax.getAnalog();
+        m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder();
         m_turningController = m_turningSparkMax.getClosedLoopController();
         configTurningSpark();
 
@@ -80,7 +82,6 @@ public class Mk4TTBSwerve{
         m_turningSparkMaxConfig.idleMode(IdleMode.kCoast);
         m_turningSparkMaxConfig.inverted(true);
         m_turningSparkMaxConfig.smartCurrentLimit(40);
-        m_turningSparkMaxConfig.absoluteEncoder.setSparkMaxDataPortConfig();
         m_turningSparkMaxConfig.absoluteEncoder.inverted(m_constants.turnInverted);
         m_turningSparkMaxConfig.absoluteEncoder.positionConversionFactor(2*Math.PI);
         m_turningSparkMaxConfig.absoluteEncoder.velocityConversionFactor(2*Math.PI/60);
@@ -89,7 +90,7 @@ public class Mk4TTBSwerve{
         //m_turningSparkMaxConfig.analogSensor.velocityConversionFactor(((2*Math.PI)/3.3)/60);
         m_turningSparkMaxConfig.closedLoop
         .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-        .pid(0.45,0.0,0.0)
+        .pid(0.95,0.0,0.0)
         .outputRange(-1.0, 1.0)
         .positionWrappingEnabled(true)
         .positionWrappingInputRange(0, 2*Math.PI);
@@ -108,10 +109,10 @@ public class Mk4TTBSwerve{
         m_driveSparkMaxConfig.encoder.velocityConversionFactor(SwerveDriveConstants.kDrivingEncoderVelocityFactor);
         m_driveSparkMaxConfig.closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-        .pid(0.15,0.0,1.0)
-        .outputRange(-1.0, 1.0);
+        .pid(0.1,0.0,0.0)
+        .outputRange(0, 1.0);
         m_driveSparkMaxConfig.closedLoopRampRate(0.05);
-        m_driveSparkMax.configure(m_driveSparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_driveSparkMax.configure(m_driveSparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     }
 
@@ -132,14 +133,14 @@ public class Mk4TTBSwerve{
     
     public void setDesiredState(SwerveModuleState desiredState){
         SwerveModuleState correctedDesiredState = new SwerveModuleState();
-        correctedDesiredState.speedMetersPerSecond = desiredState.speedMetersPerSecond;
-        correctedDesiredState.angle = desiredState.angle.plus(new Rotation2d(m_angleOffset));
-        correctedDesiredState.optimize(new Rotation2d(m_turningEncoder.getPosition()));
+        correctedDesiredState = desiredState;
+        // correctedDesiredState.angle = desiredState.angle.plus(new Rotation2d(m_angleOffset));
+        // correctedDesiredState.optimize(new Rotation2d(m_turningEncoder.getPosition()));
 
-        m_turningController.setSetpoint(correctedDesiredState.angle.getRadians(), SparkMax.ControlType.kPosition);
-        m_driveController.setSetpoint(correctedDesiredState.speedMetersPerSecond, SparkMax.ControlType.kVelocity);
+        m_turningController.setSetpoint(correctedDesiredState.angle.getRadians(), ControlType.kPosition);
+        m_driveController.setSetpoint(correctedDesiredState.speedMetersPerSecond, ControlType.kVelocity);
         
-        m_desiredState = desiredState;
+        m_desiredState = correctedDesiredState;
     }
 
 
@@ -149,11 +150,11 @@ public class Mk4TTBSwerve{
     }
 
     public SwerveModuleState getState(){
-        return new SwerveModuleState(m_driveEncoder.getVelocity(), new Rotation2d(m_turningEncoder.getPosition()-m_angleOffset));
+        return new SwerveModuleState(m_driveEncoder.getVelocity(), new Rotation2d(m_turningEncoder.getPosition()));
     }
 
     public SwerveModulePosition getPosition(){
-        return new SwerveModulePosition(m_driveEncoder.getPosition(), new Rotation2d(m_turningEncoder.getPosition()-m_angleOffset));
+        return new SwerveModulePosition(m_driveEncoder.getPosition(), new Rotation2d(m_turningEncoder.getPosition()));
     }
 
     public void stop(){
@@ -168,9 +169,9 @@ public class Mk4TTBSwerve{
     public void putSmartDashboard(){
         if(Constants.debugMode){
             SmartDashboard.putNumber(this.moduleNum + " Actual Angle", m_turningEncoder.getPosition());
-            SmartDashboard.putNumber(this.moduleNum + " Mod. Offset", m_angleOffset);
-            SmartDashboard.putNumber(this.moduleNum + " M Angle", m_turningEncoder.getPosition()-m_angleOffset);
-            SmartDashboard.putNumber(this.moduleNum + " Set Point", m_desiredState.angle.getDegrees());
+           // SmartDashboard.putNumber(this.moduleNum + " Mod. Offset", m_angleOffset);
+           // SmartDashboard.putNumber(this.moduleNum + " M Angle", m_turningEncoder.getPosition()-m_angleOffset);
+            SmartDashboard.putNumber(this.moduleNum + " Set Point", m_desiredState.angle.getRadians());
             SmartDashboard.putNumber(this.moduleNum + " Speed Setpoint", m_desiredState.speedMetersPerSecond);
             SmartDashboard.putNumber(this.moduleNum + "Drive Encoder", m_driveEncoder.getPosition());
         }

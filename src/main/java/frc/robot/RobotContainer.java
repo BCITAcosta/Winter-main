@@ -4,15 +4,14 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.Autonomous;
 import frc.robot.subsystems.Drivetrain;
-// import frc.robot.subsystems.Hopper;
-// import frc.robot.subsystems.Intake;
-import frc.robot.util.DriverOI;
+import frc.robot.util.OI.DriverOI;
+import frc.robot.util.OI.OperatorOI;
+
 
 public class RobotContainer {
   private Drivetrain subSys_drivetrain; 
@@ -21,8 +20,8 @@ public class RobotContainer {
   // private Intake subSys_intake;
   
   private DriverOI driverOI;
+  private OperatorOI operatorOI;
 
-  private Joystick OperatorIO;
 
   public RobotContainer() {
     subSys_drivetrain = Drivetrain.getInstance();
@@ -31,29 +30,13 @@ public class RobotContainer {
     // subSys_Autonomous = Autonomous.getInstance();
     // subSys_hopper =  Hopper.getInstance();
     // subSys_intake = Intake.getInstance(); 
-
-    //OperatorIO = new Joystick(2);
-    driverOI = DriverOI.getInstance();
-
+  
     configureBindings();
   }
 
   private void configureBindings() {
-    //Trigger intakeIn 
-
-    //intake out 
-
-    //belt in
-
-    //belt out 
-
-    //^^intake + belt could be spinning at same time 
-
-    //turret spin 
-
-    //shoot 
-
-
+    driverOI = DriverOI.getInstance();
+    operatorOI = OperatorOI.getInstance();
   }
 
   public Command getAutonomousCommand() {

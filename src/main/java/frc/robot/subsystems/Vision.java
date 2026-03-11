@@ -59,7 +59,7 @@ public class Vision extends SubsystemBase{
 
         cam.setFPSLimit(30);
         outsideAprilTagID = constants.outsideID;
-        insideAprilTagID = constants.insdieID;
+        insideAprilTagID = constants.insideID;
         cameraPosX = constants.cameraPosX;
         cameraPosY = constants.cameraPosY;
         cameraPosZ = constants.cameraPosZ;

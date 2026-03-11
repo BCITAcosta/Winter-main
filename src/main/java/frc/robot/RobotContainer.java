@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.Autonomous;
 import frc.robot.subsystems.Drivetrain;
@@ -15,7 +14,7 @@ import frc.robot.util.OI.OperatorOI;
 
 public class RobotContainer {
   private Drivetrain subSys_drivetrain; 
- // private Autonomous subSys_Autonomous;
+ private Autonomous subSys_Autonomous;
   // private Hopper subSys_hopper;
   // private Intake subSys_intake;
   
@@ -27,7 +26,8 @@ public class RobotContainer {
     subSys_drivetrain = Drivetrain.getInstance();
     subSys_drivetrain.setDefaultCommand(new SwerveDriveCommand());
 
-    // subSys_Autonomous = Autonomous.getInstance();
+    subSys_Autonomous = Autonomous.getInstance();
+    
     // subSys_hopper =  Hopper.getInstance();
     // subSys_intake = Intake.getInstance(); 
   
@@ -40,6 +40,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return null; //subSys_Autonomous.returnAutonomousCommand();
+    return subSys_Autonomous.returnAutonomousCommand();
   }
 }

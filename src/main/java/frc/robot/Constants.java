@@ -8,6 +8,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import frc.robot.util.SDSConstants;
 import frc.robot.util.SwerveModuleConstants;
 import frc.robot.util.TurretModuleConstants;
 import frc.robot.util.VisionModuleConstants;
@@ -44,6 +45,11 @@ public final class Constants {
       public static final double kMotorKv = 1100;
     }
 
+    public static final class Vortex{
+      public static final double kFreeSpeedRpm = 6784;
+      public static final double kMotorKv = 565;
+    }
+
   }
 
   public static class OperatorConstants {
@@ -51,13 +57,15 @@ public final class Constants {
   }
 
   public static class DriverConstants{
-    public static final int kDriverDriveJoy = 1;
-    public static final int kDriverRotationJoy = 0;
+    public static final int kDriverDriveJoy = 0;
+    public static final int kDriverRotationJoy = 1;
 
     public static class DriveJoystickButtons{
+      public static final int kSlowModeButton = 1;
     }
     
     public static class RotationJoystickButtons{
+      public static final int kResetGyroButton = 6;
     }
   }
 
@@ -67,7 +75,7 @@ public final class Constants {
 
     public static final double kBaseRadius = Math.sqrt(Math.pow(kTrackWidth, 2) + Math.pow(kWheelBase, 2))/2;
 
-    public static final double kRealMaxSpeedMPS = 4.35864;
+    public static final double kRealMaxSpeedMPS = Units.feetToMeters(SDSConstants.MK4FreeSpeedNEO.L1Plus.value);
     public static final double kMaxAngularSpeed = 4 * Math.PI /3;
     public static final double MAXROTATIONRATE = 1.0;
     public static final double kNormalModeTranslationSpeedScale = 0.85;
@@ -81,12 +89,12 @@ public final class Constants {
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 Tooth Bevel Gear, 17 Tooth Bevel Gear Driving, 19 Tooth Second Stage Out, 
     // 27 Tooth Second Stage In, 16 Tooth Pinion, 50 Tooth First Stage
-    public static final double kDrivingMotorReduction = 7.14;
+    public static final double kDrivingMotorReduction = SDSConstants.MK4ModuleGearRatio.L1Plus.value; // correction
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps
                     * kWheelCircumferenceMeters) / kDrivingMotorReduction;
 
     public static final double kDrivingEncoderPositionFactor = kWheelCircumferenceMeters
-                    / kDrivingMotorReduction; // meters
+                    / kDrivingMotorReduction; // meter
     public static final double kDrivingEncoderVelocityFactor = (kWheelCircumferenceMeters
                     / kDrivingMotorReduction) / 60.0; // meters per second
 

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.SwerveDriveConstants;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Constants;
 
 public class DriverOI {
     public static DriverOI instance;
@@ -24,8 +25,8 @@ public class DriverOI {
     private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(SwerveDriveConstants.kRotationalSlewRate);
     private double m_prevTime = WPIUtilJNI.now() * 1e-6;
 
-    private final Joystick leftJoystick = new Joystick(0);
-    private final Joystick rightJoystick = new Joystick(1);
+    private final Joystick leftJoystick = new Joystick(Constants.DriverConstants.kDriverDriveJoy);
+    private final Joystick rightJoystick = new Joystick(Constants.DriverConstants.kDriverRotationJoy);
 
     public enum DPadDirection{
         NONE, FORWARDS, LEFT, RIGHT, BACKWARDS
@@ -49,10 +50,10 @@ public class DriverOI {
     public void configureJoystick(){
 
         //Slow mode for driving 
-        Trigger slowMode = new JoystickButton(leftJoystick, 1);
+        Trigger slowMode = new JoystickButton(leftJoystick, Constants.DriverConstants.DriveJoystickButtons.kSlowModeButton);
         slowMode.toggleOnTrue(new InstantCommand(()-> toggleDriveSpeedMode()));
 
-        JoystickButton resetPose = new JoystickButton(rightJoystick, 6);
+        JoystickButton resetPose = new JoystickButton(rightJoystick, Constants.DriverConstants.RotationJoystickButtons.kResetGyroButton);
         resetPose.onTrue(new InstantCommand(()-> drivetrain.resetGyro()));
         
     }

@@ -13,8 +13,6 @@ import frc.robot.util.TurretModuleConstants;
 import frc.robot.util.VisionModuleConstants;
 import edu.wpi.first.math.util.Units;
 
-
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -31,7 +29,7 @@ public final class Constants {
 
 
   public static class AutoConstants{
-    public static final double autoDrivekP = 0.4;
+    public static final double autoDrivekP = 0.1;
     public static final double autoDrivekD = 0.0;
   }
 
@@ -77,13 +75,13 @@ public final class Constants {
     public static final double kSlowModeTranslationSpeedScale = 0.5;
     public static final double kSlowModeRotationSpeedScale = 0.5;
 
-    public static final int kDrivingMotorPinionTeeth = 16;
+    public static final double kDrivingMotorPinionTeeth = 16.0;
     public static final double kDrivingMotorFreeSpeedRps = RevMotorConstants.Neo_1_1.kFreeSpeedRpm / 60;
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4); // correction
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 Tooth Bevel Gear, 17 Tooth Bevel Gear Driving, 19 Tooth Second Stage Out, 
     // 27 Tooth Second Stage In, 16 Tooth Pinion, 50 Tooth First Stage
-    public static final double kDrivingMotorReduction = 1/7.12;
+    public static final double kDrivingMotorReduction = 7.14;
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps
                     * kWheelCircumferenceMeters) / kDrivingMotorReduction;
 
@@ -100,10 +98,10 @@ public final class Constants {
   };
 
       public static final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
-      swerveModuleLocations[0],
-      swerveModuleLocations[1],
+      swerveModuleLocations[3],
       swerveModuleLocations[2],
-      swerveModuleLocations[3]);
+      swerveModuleLocations[1],
+      swerveModuleLocations[0]);
 
 
       public static final boolean kUseRateLimit = true;

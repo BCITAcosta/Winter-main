@@ -5,7 +5,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
-import com.revrobotics.spark.SparkAnalogSensor;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
@@ -102,15 +101,15 @@ public class Mk4TTBSwerve{
      * Use to isolate configuration of the Driving Motor SparkMAX
      */
     private void configDriveSpark(){
-        m_driveSparkMaxConfig.idleMode(driveIdleMode);
+        m_driveSparkMaxConfig.idleMode(IdleMode.kCoast);
         m_driveSparkMaxConfig.inverted(m_constants.driveInverted);
         m_driveSparkMaxConfig.smartCurrentLimit(66);
         m_driveSparkMaxConfig.encoder.positionConversionFactor(SwerveDriveConstants.kDrivingEncoderPositionFactor);
         m_driveSparkMaxConfig.encoder.velocityConversionFactor(SwerveDriveConstants.kDrivingEncoderVelocityFactor);
         m_driveSparkMaxConfig.closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-        .pid(0.1,0.0,0.0)
-        .outputRange(0, 1.0);
+        .pid(0.55,0.0,0.4)
+        .outputRange(-1, 1.0);
         m_driveSparkMaxConfig.closedLoopRampRate(0.05);
         m_driveSparkMax.configure(m_driveSparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -134,8 +133,8 @@ public class Mk4TTBSwerve{
     public void setDesiredState(SwerveModuleState desiredState){
         SwerveModuleState correctedDesiredState = new SwerveModuleState();
         correctedDesiredState = desiredState;
-        // correctedDesiredState.angle = desiredState.angle.plus(new Rotation2d(m_angleOffset));
-        // correctedDesiredState.optimize(new Rotation2d(m_turningEncoder.getPosition()));
+        correctedDesiredState.angle = desiredState.angle.plus(new Rotation2d(m_angleOffset));
+        correctedDesiredState.optimize(new Rotation2d(m_turningEncoder.getPosition()));
 
         m_turningController.setSetpoint(correctedDesiredState.angle.getRadians(), ControlType.kPosition);
         m_driveController.setSetpoint(correctedDesiredState.speedMetersPerSecond, ControlType.kVelocity);

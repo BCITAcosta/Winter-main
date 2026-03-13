@@ -291,6 +291,7 @@ public class Drivetrain extends SubsystemBase{
 
     public void resetGyro(){
         gyro.reset();   
+        odometry.resetPosition(correctHeadingTargetHeading, swerveModulePositions, getPose());
     }
 
     public Pose2d getPose(){
@@ -298,8 +299,8 @@ public class Drivetrain extends SubsystemBase{
     }
 
     public void updateOdometry(){
-        odometry.updateWithTime(Timer.getFPGATimestamp(), getHeadingAsRotation2d(), swerveModulePositions);
-        //odometry.update(correctHeadingTargetHeading, swerveModulePositions);
+        //odometry.updateWithTime(Timer.getFPGATimestamp(), getHeadingAsRotation2d(), swerveModulePositions);
+        odometry.update(correctHeadingTargetHeading, swerveModulePositions);
         m_field.setRobotPose(odometry.getEstimatedPosition());
         posPublisher.set(getPose());
     }

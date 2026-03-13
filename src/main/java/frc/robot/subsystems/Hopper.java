@@ -16,7 +16,7 @@ public class Hopper extends SubsystemBase{
 
     private final SparkFlex towerFeeder;
     private final SparkMax blueTowerIndexer;
-    //private final SparkMax orangeTowerIndexer;
+    private final SparkMax orangeTowerIndexer;
 
     private final SparkFlexConfig towerFeederConfig;
     private final SparkMaxConfig indexerConfig;
@@ -24,7 +24,7 @@ public class Hopper extends SubsystemBase{
     public Hopper(){
         towerFeeder = new SparkFlex(61, MotorType.kBrushless);
         blueTowerIndexer = new SparkMax(57, MotorType.kBrushless);
-        //orangeTowerIndexer = new SparkMax(0, MotorType.kBrushless);
+        orangeTowerIndexer = new SparkMax(58, MotorType.kBrushless);
 
         towerFeederConfig = new SparkFlexConfig();
         configureTowerFeeder();
@@ -44,7 +44,7 @@ public class Hopper extends SubsystemBase{
         .inverted(false)
         .idleMode(IdleMode.kBrake);
         blueTowerIndexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
-        //orangeTowerIndexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+        orangeTowerIndexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
     public static Hopper getInstance(){

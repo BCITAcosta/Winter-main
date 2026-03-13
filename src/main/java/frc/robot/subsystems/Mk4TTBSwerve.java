@@ -103,13 +103,14 @@ public class Mk4TTBSwerve{
     private void configDriveSpark(){
         m_driveSparkMaxConfig.idleMode(IdleMode.kCoast);
         m_driveSparkMaxConfig.inverted(m_constants.driveInverted);
-        m_driveSparkMaxConfig.smartCurrentLimit(66);
+        m_driveSparkMaxConfig.smartCurrentLimit(55);
         m_driveSparkMaxConfig.encoder.positionConversionFactor(SwerveDriveConstants.kDrivingEncoderPositionFactor);
         m_driveSparkMaxConfig.encoder.velocityConversionFactor(SwerveDriveConstants.kDrivingEncoderVelocityFactor);
         m_driveSparkMaxConfig.closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         .pid(0.55,0.0,0.4)
         .outputRange(-1, 1.0);
+        m_driveSparkMaxConfig.closedLoop.feedForward.sva(8.6,2.72,0.34);
         m_driveSparkMaxConfig.closedLoopRampRate(0.05);
         m_driveSparkMax.configure(m_driveSparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 

@@ -54,6 +54,16 @@ public final class Constants {
 
   public static class OperatorConstants {
     public static final int kOperatorJoyPort = 2;
+
+    public static class OperatorJoystickButtons{
+      public static final int kDropIntakeButton = 1;
+      public static final int kRaiseIntakeButton = 2;
+      public static final int kIntakeButton = 3;
+      public static final int kOuttakeButton = 4;
+      public static final int kLeftTurretLock = 5;
+      public static final int kRightTurretLock = 6;
+      public static final int kFireTurrets = 7;
+    }
   }
 
   public static class DriverConstants{
@@ -78,8 +88,8 @@ public final class Constants {
     public static final double kRealMaxSpeedMPS = Units.feetToMeters(SDSConstants.MK4FreeSpeedNEO.L1Plus.value);
     public static final double kMaxAngularSpeed = 4 * Math.PI /3;
     public static final double MAXROTATIONRATE = 1.0;
-    public static final double kNormalModeTranslationSpeedScale = 0.85;
-    public static final double kNormalModeRotationSpeedScale = 0.85;
+    public static final double kNormalModeTranslationSpeedScale = 1.0;
+    public static final double kNormalModeRotationSpeedScale = 1.0;
     public static final double kSlowModeTranslationSpeedScale = 0.5;
     public static final double kSlowModeRotationSpeedScale = 0.5;
 
@@ -87,8 +97,6 @@ public final class Constants {
     public static final double kDrivingMotorFreeSpeedRps = RevMotorConstants.Neo_1_1.kFreeSpeedRpm / 60;
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4); // correction
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
-    // 45 Tooth Bevel Gear, 17 Tooth Bevel Gear Driving, 19 Tooth Second Stage Out, 
-    // 27 Tooth Second Stage In, 16 Tooth Pinion, 50 Tooth First Stage
     public static final double kDrivingMotorReduction = SDSConstants.MK4ModuleGearRatio.L1Plus.value; // correction
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps
                     * kWheelCircumferenceMeters) / kDrivingMotorReduction;
@@ -185,16 +193,22 @@ public final class Constants {
 
     public static final double turretCircleThrow = 3;//this would be 3 of the units used based off of the turret radius. this would be 3 inches of arch length
   
-    // public static final class leftTurt{
-    //   public static final int turnMotorID = 0;
-    //   public static final int shooterMotorLeftID = 0;
-    //   public static final int shooterMotorRightID = 0;
-    //   public static final double idleRPM = 0;
-    //   public static final double maxRPM = 0;
-    //   public static final boolean turnMotorInverted = false;
-    //   public static final boolean shooterMotorLeftInverted = false;
-    //   public static final TurretModuleConstants constants = new TurretModuleConstants(turnMotorID, shooterMotorLeftID, shooterMotorRightID, idleRPM, maxRPM, turnMotorInverted, shooterMotorLeftInverted);
-    // }
+    public static final class leftTurt{
+      public static final int turnMotorID = 0;
+      public static final int shooterMotorLeftID = 0;
+      public static final int shooterMotorRightID = 0;
+      public static final double idleRPM = 1000;
+      public static final double maxRPM = 4000;
+      public static final double maxAcceleration = 24000;
+      public static final boolean turnMotorInverted = false;
+      public static final boolean shooterMotorLeftInverted = false;
+      public static final double[] pidValues = {0.0006, 0.000000175, 0.0005};
+      public static final boolean enabled = false;
+      public static final TurretModuleConstants constants = new TurretModuleConstants(
+        turnMotorID, shooterMotorLeftID, shooterMotorRightID, 
+        idleRPM, maxRPM, maxAcceleration, 
+        turnMotorInverted, shooterMotorLeftInverted, pidValues, enabled);
+    }
     
     public static final class rightTurt{
       public static final int turnMotorID = 60;
@@ -206,10 +220,11 @@ public final class Constants {
       public static final boolean turnMotorInverted = false;
       public static final boolean shooterMotorLeftInverted = false;
       public static final double[] pidValues = {0.0006, 0.000000175, 0.0005};
+      public static final boolean enabled = true;
       public static final TurretModuleConstants constants = new TurretModuleConstants(
         turnMotorID, shooterMotorLeftID, shooterMotorRightID, 
         idleRPM, maxRPM, maxAcceleration, 
-        turnMotorInverted, shooterMotorLeftInverted, pidValues);
+        turnMotorInverted, shooterMotorLeftInverted, pidValues, enabled);
 
     }
   

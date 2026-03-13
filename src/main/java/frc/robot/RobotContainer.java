@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.Autonomous;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Hopper;
 import frc.robot.util.OI.DriverOI;
 import frc.robot.util.OI.OperatorOI;
 
@@ -15,8 +18,9 @@ import frc.robot.util.OI.OperatorOI;
 public class RobotContainer {
   private Drivetrain subSys_drivetrain; 
  private Autonomous subSys_Autonomous;
-  // private Hopper subSys_hopper;
-  // private Intake subSys_intake;
+  private Hopper subSys_hopper;
+  private Intake subSys_intake;
+  private Turret subSys_Turret;
   
   private DriverOI driverOI;
   private OperatorOI operatorOI;
@@ -28,8 +32,10 @@ public class RobotContainer {
 
     subSys_Autonomous = Autonomous.getInstance();
     
-    // subSys_hopper =  Hopper.getInstance();
-    // subSys_intake = Intake.getInstance(); 
+    subSys_hopper =  Hopper.getInstance();
+    subSys_intake = Intake.getInstance(); 
+
+    subSys_Turret = new Turret(0, Constants.Turret.rightTurt.constants);
   
     configureBindings();
   }

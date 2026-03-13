@@ -84,9 +84,6 @@ public class Mk4TTBSwerve{
         m_turningSparkMaxConfig.absoluteEncoder.inverted(m_constants.turnInverted);
         m_turningSparkMaxConfig.absoluteEncoder.positionConversionFactor(2*Math.PI);
         m_turningSparkMaxConfig.absoluteEncoder.velocityConversionFactor(2*Math.PI/60);
-        //m_turningSparkMaxConfig.analogSensor.inverted(m_constants.turnInverted);
-        //m_turningSparkMaxConfig.analogSensor.positionConversionFactor((2*Math.PI)/3.3);
-        //m_turningSparkMaxConfig.analogSensor.velocityConversionFactor(((2*Math.PI)/3.3)/60);
         m_turningSparkMaxConfig.closedLoop
         .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
         .pid(0.95,0.0,0.0)
@@ -110,7 +107,6 @@ public class Mk4TTBSwerve{
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         .pid(0.55,0.0,0.4)
         .outputRange(-1, 1.0);
-        m_driveSparkMaxConfig.closedLoop.feedForward.sva(8.6,2.72,0.34);
         m_driveSparkMaxConfig.closedLoopRampRate(0.05);
         m_driveSparkMax.configure(m_driveSparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 

@@ -31,7 +31,7 @@ public class Intake extends SubsystemBase{
     }
 
     private void configureLiftSpark(){
-        intakeLiftSparkMaxConfig.idleMode(IdleMode.kBrake)
+        intakeLiftSparkMaxConfig.idleMode(IdleMode.kCoast)
         .smartCurrentLimit(80)
         .inverted(false);
         intakeLiftSparkMax.configure(intakeLiftSparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
@@ -65,7 +65,13 @@ public class Intake extends SubsystemBase{
 
     public Command intakeExpand(){
         return run(()->{
-            setLiftDropSpeed(-0.5);
+            setLiftDropSpeed(-0.25);
+        });
+    }
+
+    public Command intakeRetract(){
+        return run(()->{
+            setLiftDropSpeed(0.5);
         });
     }
 

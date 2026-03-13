@@ -56,13 +56,15 @@ public final class Constants {
     public static final int kOperatorJoyPort = 2;
 
     public static class OperatorJoystickButtons{
-      public static final int kDropIntakeButton = 1;
-      public static final int kRaiseIntakeButton = 2;
-      public static final int kIntakeButton = 3;
-      public static final int kOuttakeButton = 4;
-      public static final int kLeftTurretLock = 5;
-      public static final int kRightTurretLock = 6;
-      public static final int kFireTurrets = 7;
+      public static final int kDropIntakeButton = 6;
+      public static final int kRaiseIntakeButton = 5;
+      public static final int kIntakeButton = 11;
+      public static final int kOuttakeButton = 12;
+      // public static final int kLeftTurretLock = 5;
+      // public static final int kRightTurretLock = 6;
+      // public static final int kFireTurrets = 7;
+      public static final int kIndexBlueFwd = 10;
+      public static final int kIndexBlueRwd = 9;
     }
   }
 

@@ -42,7 +42,7 @@ public class OperatorOI {
 
         JoystickButton indexFwd = new JoystickButton(operatorJoystick, OperatorJoystickButtons.kIndexBlueFwd);
         indexFwd.whileTrue(hopper.runBlueIndex());
-        indexFwd.whileTrue(hopper.runFeederFwd());
+        //indexFwd.whileTrue(hopper.runFeederFwd());
         indexFwd.onFalse(hopper.stopBlueIndex());
 
         JoystickButton indexRwd = new JoystickButton(operatorJoystick, OperatorJoystickButtons.kIndexBlueRwd);

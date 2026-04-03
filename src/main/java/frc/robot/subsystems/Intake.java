@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -20,9 +21,12 @@ public class Intake extends SubsystemBase{
     private final SparkMaxConfig intakeLiftSparkMaxConfig;
     private final SparkFlexConfig intakeRollerFlexConfig;
 
+    private final SparkClosedLoopController intakeController;
+
     public Intake(){
         intakeLiftSparkMax = new SparkMax(52, MotorType.kBrushless);
         intakeLiftSparkMaxConfig = new SparkMaxConfig();
+        intakeController = intakeLiftSparkMax.getClosedLoopController();
         configureLiftSpark();
         
         intakeRollerSparkFlex = new SparkFlex(51, MotorType.kBrushless);

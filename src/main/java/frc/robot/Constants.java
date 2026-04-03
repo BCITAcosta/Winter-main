@@ -30,7 +30,7 @@ public final class Constants {
 
 
   public static class AutoConstants{
-    public static final double autoDrivekP = 0.1;
+    public static final double autoDrivekP = 0.4;
     public static final double autoDrivekD = 0.0;
   }
 
@@ -196,9 +196,8 @@ public final class Constants {
     public static final double turretCircleThrow = 3;//this would be 3 of the units used based off of the turret radius. this would be 3 inches of arch length
   
     public static final class leftTurt{
-      public static final int turnMotorID = 0;
+      public static final int turnMotorID = 62;
       public static final int shooterMotorLeftID = 0;
-      public static final int shooterMotorRightID = 0;
       public static final double idleRPM = 1000;
       public static final double maxRPM = 4000;
       public static final double maxAcceleration = 24000;
@@ -207,7 +206,7 @@ public final class Constants {
       public static final double[] pidValues = {0.0006, 0.000000175, 0.0005};
       public static final boolean enabled = false;
       public static final TurretModuleConstants constants = new TurretModuleConstants(
-        turnMotorID, shooterMotorLeftID, shooterMotorRightID, 
+        turnMotorID, shooterMotorLeftID, 
         idleRPM, maxRPM, maxAcceleration, 
         turnMotorInverted, shooterMotorLeftInverted, pidValues, enabled);
     }
@@ -215,7 +214,6 @@ public final class Constants {
     public static final class rightTurt{
       public static final int turnMotorID = 60;
       public static final int shooterMotorLeftID = 53;
-      public static final int shooterMotorRightID = 54;
       public static final double idleRPM = 1000;
       public static final double maxRPM = 4000;
       public static final double maxAcceleration = 24000;
@@ -224,7 +222,7 @@ public final class Constants {
       public static final double[] pidValues = {0.0006, 0.000000175, 0.0005};
       public static final boolean enabled = true;
       public static final TurretModuleConstants constants = new TurretModuleConstants(
-        turnMotorID, shooterMotorLeftID, shooterMotorRightID, 
+        turnMotorID, shooterMotorLeftID,
         idleRPM, maxRPM, maxAcceleration, 
         turnMotorInverted, shooterMotorLeftInverted, pidValues, enabled);
 

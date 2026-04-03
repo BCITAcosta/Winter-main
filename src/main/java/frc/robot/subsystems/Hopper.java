@@ -9,6 +9,7 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -17,7 +18,7 @@ public class Hopper extends SubsystemBase{
 
     private final SparkFlex towerFeeder;
     private final SparkMax blueTowerIndexer;
-    //private final SparkMax orangeTowerIndexer;
+    private final SparkMax orangeTowerIndexer;
 
     private final SparkFlexConfig towerFeederConfig;
     private final SparkMaxConfig indexerConfig;
@@ -25,7 +26,7 @@ public class Hopper extends SubsystemBase{
     public Hopper(){
         towerFeeder = new SparkFlex(61, MotorType.kBrushless);
         blueTowerIndexer = new SparkMax(57, MotorType.kBrushless);
-        //orangeTowerIndexer = new SparkMax(58, MotorType.kBrushless);
+        orangeTowerIndexer = new SparkMax(58, MotorType.kBrushless);
 
         towerFeederConfig = new SparkFlexConfig();
         configureTowerFeeder();
@@ -45,7 +46,7 @@ public class Hopper extends SubsystemBase{
         .inverted(false)
         .idleMode(IdleMode.kBrake);
         blueTowerIndexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
-        //orangeTowerIndexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+        orangeTowerIndexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
     public static Hopper getInstance(){
@@ -64,11 +65,32 @@ public class Hopper extends SubsystemBase{
     }
 
     private void setOrangeIndexerSpeed(double speed){
+        orangeTowerIndexer.set(speed);
+    }
+
+    public boolean getBlueIndexRunning(){
+        if(blueTowerIndexer.get() > 0){
+            return true;
+        }
+        return false;
+    }
+
+        public boolean getOrangeIndexRunning(){
+        if(blueTowerIndexer.get() > 0){
+            return true;
+        }
+        return false;
     }
     
     public Command runFeederFwd(){
         return run(()->{
             setFeederSpeed(1);
+        });
+    }
+
+    public Command runFeederIdle(){
+        return run(()->{
+            setFeederSpeed(0.5);
         });
     }
 
@@ -96,4 +118,21 @@ public class Hopper extends SubsystemBase{
         });
     }
 
+        public Command runOrangeIndex(){
+        return run(()->{
+            setOrangeIndexerSpeed(1);
+        });
+    }
+
+    public Command reverseOrangeIndex(){
+        return run(()->{
+            setOrangeIndexerSpeed(-1);
+        });
+    }
+
+    public Command stopOrangeIndex(){
+        return run(()->{
+            setOrangeIndexerSpeed(0);
+        });
+    }
 }

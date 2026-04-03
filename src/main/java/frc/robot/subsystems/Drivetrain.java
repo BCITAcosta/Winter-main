@@ -124,8 +124,8 @@ public class Drivetrain extends SubsystemBase{
             this::getRobotChassisSpeeds,
             (speeds, feedfowards) -> autoDrive(speeds),
             new PPHolonomicDriveController(
-                new PIDConstants(0.01,0,0),
-                new PIDConstants(0.04,0,0)
+                new PIDConstants(0.005,0,0),
+                new PIDConstants(0.01,0,0)
             ),
             robotConfig,
             ()-> {
@@ -299,8 +299,8 @@ public class Drivetrain extends SubsystemBase{
     }
 
     public void updateOdometry(){
-        //odometry.updateWithTime(Timer.getFPGATimestamp(), getHeadingAsRotation2d(), swerveModulePositions);
-        odometry.update(correctHeadingTargetHeading, swerveModulePositions);
+        odometry.updateWithTime(Timer.getFPGATimestamp(), getHeadingAsRotation2d(), swerveModulePositions);
+        //odometry.update(correctHeadingTargetHeading, swerveModulePositions);
         m_field.setRobotPose(odometry.getEstimatedPosition());
         posPublisher.set(getPose());
     }

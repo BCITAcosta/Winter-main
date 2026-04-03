@@ -2,19 +2,18 @@ package frc.robot.util;
 
 public class TurretModuleConstants {
     public final int turnMotorID;
-    public final int shooterMotorLeftID, shooterMotorRightID;
+    public final int shooterMotorLeftID;
 
     public final double idleRPM, maxRPM, maxAcceleration;
 
     public final double kP, kI, kD;
 
-    public final boolean turnMotorInverted, shooterMotorLeftInverted, shooterMotorRightInverted, enabled;
+    public final boolean turnMotorInverted, shooterMotorLeftInverted, enabled;
 
     /**
      * Turret Module Constants to be used when creating turret modules;
      * @param turnMotorID
      * @param shooterMotorLeftID
-     * @param shooterMotorRightID
 
      * @param turnMotorInverted
      * @param shooterMotorLeftInverted
@@ -27,10 +26,9 @@ public class TurretModuleConstants {
      * @param enabled Whether or not the turret module is enabled. This is to allow for testing of the turret module without having to worry about it breaking the robot.
      */
     
-    public TurretModuleConstants(int turnMotorID, int shooterMotorLeftID, int shooterMotorRightID, double idleRPM, double maxRPM, double maxAcceleration, boolean turnMotorInverted, boolean shooterMotorLeftInverted, double[] pidValues, boolean enabled){
+    public TurretModuleConstants(int turnMotorID, int shooterMotorLeftID, double idleRPM, double maxRPM, double maxAcceleration, boolean turnMotorInverted, boolean shooterMotorLeftInverted, double[] pidValues, boolean enabled){
         this.turnMotorID = turnMotorID;
         this.shooterMotorLeftID = shooterMotorLeftID;
-        this.shooterMotorRightID = shooterMotorRightID;
         this.idleRPM = idleRPM;
         this.maxRPM = maxRPM;
         this.maxAcceleration = maxAcceleration;
@@ -39,7 +37,6 @@ public class TurretModuleConstants {
         this.kD = pidValues[2];
         this.turnMotorInverted = turnMotorInverted;
         this.shooterMotorLeftInverted = shooterMotorLeftInverted;
-        this.shooterMotorRightInverted = !shooterMotorLeftInverted;
         this.enabled = enabled;
     }
     
